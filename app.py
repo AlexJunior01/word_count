@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 app.config.from_mapping(
@@ -6,23 +6,15 @@ app.config.from_mapping(
 )
 
 
-@app.route("/", methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    error = None
+    count = None
+    if request.method == 'POST':
+        text = request.form['text']
+        if not text:
+            error = "Please enter some text."
+        else:
+            count = len(text.split())
 
-
-@app.route('/word_count', methods=['POST'])
-def word_count():
-    text = request.form.get("user_text")
-    message = "Thanks for the feedback!"
-    qtd_palavras = len(text)
-    data = {
-        "message": message,
-        "word_count": qtd_palavras
-    }
-
-    if len(text) == 0:
-        message = 'Text input is required'
-        return render_template("feedback_fail_response.html", message=message)
-
-    return render_template("feedback_response.html", data=data)
+    return render_template('index.html', error=error, count=count)

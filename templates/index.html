@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>User Revision</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/static/style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="content">
-        <form action="/word_count" method="post">
-            <input name="user_text" type="text">
-            <button type="submit" formaction="/word_count"> Enviar </button>
-        </form>
-    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if error %}
+                    <div class="response alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Error</h4>
+                        <hr>
+                        <p> {{ error }}</p>
+                    </div>
+                {% endif %}
 
+                {% if count %}
+                    <div class="response alert alert-success">
+                        <h4 class="alert-heading">Result</h4>
+                        <hr>
+                        <p>The text has <strong>{{ count }}</strong> words.</p>
+                    </div>
+                {% endif %}
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label>Text:</label>
+                        <textarea class="form-control" name="text" id="textbox"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
